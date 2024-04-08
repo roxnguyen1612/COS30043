@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.1</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <h1>Number Guessing Game</h1>
+    <div id="app">
+        <p>
+            You are be given a nummber from 1 to 100: <input type="text" v-model="guess">
+        </p>
+        <p>
+            <button type="submit" v-on:click="checkGuess()">Check Guess</button>
+            <button type="submit" v-on:click="giveUp()">Give Up</button>
+            <button type="reset" v-on:click="startOver()">Start Over</button>
+        </p>
+
+        <p>{{ msg }}</p>
+    </div>
+
+    <script src="js/appgame.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.4</title>
+    <style>
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .flex-item {
+            flex: 1;
+            margin: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <h1>Registration App: Cloud Service</h1>
+    <div id="app">
+        <div>
+            <h2>Login Information</h2>
+            <p>
+                Enter user name: <input type="text" v-model="userName">
+            </p>
+            <p>
+                Enter password: <input type="text" v-model="pwd">
+            </p>
+            <p>
+                Re-enter password: <input type="text" v-model="new_pwd">
+                <span v-show="pwd !== '123'">Password does not match</span>
+            </p>
+        </div>
+        <div class="phone-information">
+            <h2>Phone Information</h2>
+            <div class="flex-container">
+                <!-- radio button -->
+                <div class="flex-item">
+                    <h3><label>Operating System</label></h3>
+                    <input type="radio" id="android" value="Android" v-model="phoneOS">
+                    <label for="android">Android</label>
+                    <input type="radio" id="ios" value="IOS" v-model="phoneOS">
+                    <label for="ios">IOS</label>
+                    <input type="radio" id="windows" value="Windows" v-model="phoneOS">
+                    <label for="windows">Windows</label>
+                </div>
+                <!-- dropdown -->
+                <div class="flex-item">
+                    <h3>Model</h3>
+                    <label for="model">Select phone model:</label>
+                    <select id="model" v-model="phoneModel">
+                        <option v-for="phone in filteredPhones" :key="phone.model" :value="phone.model">
+                            {{ phone.model }}
+
+                            <!-- :value= each dropdown option to the phone.model value. -->
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <!-- summary of the choice -->
+            <div>
+                <h2>Summary</h2>
+                <ul>
+                    <li>
+                        <p>Username: {{userName}}</p>
+                    </li>
+                    <li>
+                        <p>OS: {{phoneOS}}</p>
+                    </li>
+                    <li>
+                        <p>Phone: {{phoneModel}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            data() {
+                return {
+                    userName: "caslon",
+                    pwd: "123",
+                    new_pwd: "",
+                    phoneOS: '', // Selected operating system
+                    phoneModel: '', // Selected phone model
+                    phones: [
+                        { model: 'HTC 10', os: 'Android' },
+                        { model: 'Nokia 6', os: 'Android' },
+                        { model: 'Samsung Galaxy 20 Ultra', os: 'Android' },
+                        { model: 'IDD VIOS Non Windows', os: 'Android' },
+                        { model: 'iPhone X', os: 'IOS' },
+                        { model: 'iPhone Xs Max', os: 'IOS' },
+                        { model: 'iPhone 11 Pro Max', os: 'IOS' },
+                        { model: 'IDD Windows Non Android', os: 'IOS' },
+                        { model: 'HP Elite x3', os: 'Windows' },
+                        { model: 'Microsoft 950', os: 'Windows' },
+                        { model: 'Microsoft 950XL', os: 'Windows' },
+                        { model: 'IDD VIOS Non Android', os: 'Windows' }
+                    ]
+                }
+            },
+
+            computed: {
+                //this is an array
+                filteredPhones() {
+                    return this.phones.filter(phone => phone.os === this.phoneOS);
+                    //For each phone object in the array, it checks whether phone.os 
+                    //(the operating system of the current phone) matches this.phoneOS 
+                    //(the operating system selected by the user)
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

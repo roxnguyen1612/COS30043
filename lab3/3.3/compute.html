@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.3</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+        <div>
+            <p>
+                Enter weight in kilograms: <input type="number" v-model="numWt">
+            </p>
+        </div>
+        <div>
+            <p>
+                Enter height in centimetres: <input type="number" v-model="numHt">
+            </p>
+        </div>
+        <!-- BMI condition -->
+        <div v-if="numBMI < 18.5">
+            <p>Computed BMI is: {{numBMI.toFixed(2)}} Underweight</p>
+        </div>
+        <div v-if="numBMI >= 18.5 && numBMI < 25">
+            <p>Computed BMI is: {{numBMI.toFixed(2)}} Normal</p>
+        </div>
+        <div v-if="numBMI >= 25 && numBMI < 30">
+            <p>Computed BMI is: {{numBMI.toFixed(2)}} Overweight</p>
+        </div>
+        <div v-if="numBMI >= 30">
+            <p>Computed BMI is: {{numBMI.toFixed(2)}} Obese</p>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            data() {
+                return {
+                    numWt: 0,
+                    numHt: 0
+                }
+            },
+
+            //compute formula: BMI = bodyweight in kilograms divided by height in meters squared
+            computed: {
+                numBMI() {
+                    const heightInMeters = this.numHt / 100; 
+                    return this.numWt / (heightInMeters ** 2); 
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
