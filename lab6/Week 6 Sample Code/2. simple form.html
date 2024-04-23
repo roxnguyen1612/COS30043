@@ -11,20 +11,20 @@
 
 <body>
 	<h1>Simple Form</h1>
-	<div id="app">	
+	<div id="app">
 		<form  method="post"  @submit="checkForm"
-		action="https://mercury.swin.edu.au/it000000/formtest.php"  >
+		  >
 			<div v-if="errors.length">
 				<ul>
 					<li v-for="e in errors">{{e}}</li>
 				</ul>
 			</div>
 			
-			<p> 
+			<p>
 				<label for="fName">First Name</label>
 				<input type="text" name="fName" id="fName" v-model="fName"  >
 			</p>
-			<p> 
+			<p>
 				<label for="lName">First Name</label>
 				<input type="text" name="lName" id="lName" v-model="lName"  >
 			</p>
