@@ -14,7 +14,7 @@
 <body>
     <div id="app" class="container">
         <div class="row">
-            <pagenavi></pagenavi>
+            <page-navi></page-navi>
         </div>
     </div>
 
@@ -30,70 +30,46 @@
 
     <!-- 8.1P -->
     <script>
-    var studMarks = [
-        {"name": "Amy", "mark": 90},
-        {"name": "Bill", "mark": 80},
-        {"name": "Casey", "mark": 78},
-        {"name": "David", "mark": 84},
-        {"name": "Ella", "mark": 95},
-        {"name": "Frank", "mark": 82},
-        {"name": "Gina", "mark": 88},
-        {"name": "Harry", "mark": 76},
-        {"name": "Ivy", "mark": 91},
-        {"name": "Jack", "mark": 69},
-        {"name": "Kara", "mark": 85},
-        {"name": "Liam", "mark": 92},
-        {"name": "Mona", "mark": 75},
-        {"name": "Ned", "mark": 83},
-        {"name": "Olivia", "mark": 79},
-        {"name": "Pete", "mark": 77},
-        {"name": "Quinn", "mark": 89},
-        {"name": "Rose", "mark": 81},
-        {"name": "Sam", "mark": 74},
-        {"name": "Tina", "mark": 87},
-        {"name": "Uma", "mark": 93},
-        {"name": "Vince", "mark": 70},
-        {"name": "Wendy", "mark": 86},
-        {"name": "Xavier", "mark": 94},
-        {"name": "Yara", "mark": 68},
-        {"name": "Zack", "mark": 71}
-    ];
-
         const { createApp } = Vue
         const app = createApp()
 
-        app.component('pagenavi', {
+        app.component('page-navi', {
             components: {
                 paginate: VuejsPaginateNext,
             },
             data: function () {
                 return {
                     currentPage: 1,
-                    students: studMarks,
+                    units: [],
                 }
             },
             template: `
             <h1>Student Mark</h1>
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
+                    <caption>List of Units</caption>
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Mark</th>
+                            <th id="code" scope="col">Code</th>
+                            <th id="desc" scope="col">Description</th>
+                            <th id="cp" scope="col">CP</th>
+                            <th id="type" scope="col">Type</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr v-for="s in getStuds">
-                            <td>{{s.name}}</td>
-                            <td>{{s.mark}}</td>
+                        <tr v-for="u in getUnits">
+                            <td id="code">{{u.code}}</td>
+                            <td id="desc">{{u.desc}}</td>
+                            <td id="cp">{{u.cp}}</td>
+                            <td id="type">{{u.type}}</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <!-- Vue Paginate template -->
                 <paginate 
-                    :page-count="13"    
+                    :page-count="5"    
                     :page-range="3" 
                     :margin-pages="1"
                     :click-handler="clickCallback" 
@@ -106,10 +82,10 @@
             </div>
             `,
             computed: {
-                getStuds: function() {
-                    let current = this.currentPage * 2;  // total 24 units, suppose 2 per page, 12 pages
-                    let start = current - 2;
-                    return this.students.slice(start, current);
+                getUnits: function() {
+                    let current = this.currentPage * 5;  // total 24 units, suppose 2 per page, 12 pages
+                    let start = current - 5;
+                    return this.units.slice(start, current);
                 }
             },
             methods: {
@@ -117,6 +93,18 @@
                     this.currentPage = Number(pageNum);
                     console.log(this.currentPage);
                 }
+            },
+            mounted() {
+                fetch('units.json')
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        this.units = data;
+                    })
+                    .catch(error => {
+                        this.err = error
+                    });
             }
         })
         app.mount('#app')
