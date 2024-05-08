@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>9.1P</title>
+</head>
+
+<body>
+    <div id="app"  class="container">
+        <p>
+            <!-- use the router-link to create navigation. -->
+            <router-link to="/">Name Test</router-link> |
+            <router-link to="/two">Post App</router-link> |
+            <router-link to="/three">Student Marks</router-link>
+        </p>
+        <hr>
+
+        <div class="row">
+            <!-- component matched by the route will render here -->
+            <router-view></router-view>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- link to vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- link to router -->
+    <script src="https://unpkg.com/vue-router@4.0.15/dist/vue-router.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+
+    <!-- VueJS paginate next -->
+    <script src="https://unpkg.com/vuejs-paginate-next@latest/dist/vuejs-paginate-next.umd.js"></script>
+
+
+
+
+
+
+    <!-- Load the custom component js files -->
+    <script src="/lab9/9.1P/components/studMarks.js"></script>
+    <script src="/lab9/9.1P/components/nameTest.js"></script>
+    <script src="/lab9/9.1P/components/post.js"></script>
+
+    <!-- Load the custom main js file -->
+    <script src="/lab9/9.1P/main.js"></script>
+</body>
+
+</html>
