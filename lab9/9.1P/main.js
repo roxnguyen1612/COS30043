@@ -1,7 +1,7 @@
 const routes = [
   { path: '/', component: NameTest },
   { path: '/two', component: PostApp },
-  { path: '/three', component: StudentMarks }
+  { path: '/three', component: StudentMarks },
 ]
 
 const router = VueRouter.createRouter({
