@@ -1,32 +1,22 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <h1>Welcome {{ firstName }} {{ lastName }}!</h1>
+    <label for="fname">First Name:</label>
+    <input id="fname" type="text" v-model="firstName" @input="updateFirstName">
+    <label for="lname">Last Name:</label>
+    <input id="lname" type="text" v-model="lastName" @input="updateLastName">
+  
+  <h2>Select a Picture:</h2>
+    <label>
+      <input type="radio" value="picture1.jpg" v-model="selectedPicture" @change="updatePicture">
+      Picture 1
+    </label>
+    <label>
+      <input type="radio" value="picture2.jpg" v-model="selectedPicture" @change="updatePicture">
+      Picture 2
+    </label>
+
+    <img v-if="selectedPicture" :src="getPicturePath(selectedPicture)" alt="Selected" style="margin-top: 20px;">
   </div>
 </template>
 
@@ -34,25 +24,65 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    fname: {
+      type: String,
+      required: true
+    },
+    lname: {
+      type: String,
+      required: true
+    }
+
+  },
+  data() {
+    return {
+      firstName: this.fname,
+      lastName: this.lname,
+      selectedPicture: ''
+    };
+  },
+  methods: {
+    updateFirstName(event) {
+      // Emit event to update `fname` in the parent component
+      this.$emit('update:fname', event.target.value);
+    },
+    updateLastName(event) {
+      // Emit event to update `lname` in the parent component
+      this.$emit('update:lname', event.target.value);
+    },
+    updatePicture(event) {
+      // Emit the event to update the picture filename
+      this.$emit('update:picture', event.target.value);
+    },
+    getPicturePath(filename) {
+      // Resolve the image path from the assets folder
+      return require(`@/assets/${filename}`);
+    }
+  },
+  watch: {
+    // Synchronize data with prop changes
+    fname(newValue) {
+      this.firstName = newValue;
+    },
+    lname(newValue) {
+      this.lastName = newValue;
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+h1 {
+  margin: 20px 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>
